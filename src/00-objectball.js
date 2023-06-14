@@ -239,7 +239,7 @@ function winningTeam(){
     let awayScore = 0;
     const homePlayers = gameIterator(game, 'players', 'home');
     const awayPlayers = gameIterator(game, 'players', 'away');
-    debugger
+    
     for (let athlete in homePlayers){
         homeScore += numPointsScored(athlete);
     }
@@ -267,6 +267,7 @@ function playerWithLongestName(){
     };
     
     for (let athlete in players){
+        console.log(`${athlete} has ${athlete.length} characters`)
         if (athlete.length > length){
             length = athlete.length;
             player = athlete;
@@ -275,7 +276,7 @@ function playerWithLongestName(){
     console.log(`Longest name: ${player} with ${length} characters`);
     return player;
 }
-/*
+
 numPointsScored('Alan Anderson');
 numPointsScored('Reggie Evans');
 numPointsScored('Brook Lopez');
@@ -299,8 +300,12 @@ console.log('');
 
 teamNames();
 
+console.log('');
+
 playerNumbers('Brooklyn Nets');
 playerNumbers('Charlotte Hornets');
+
+console.log('');
 
 playerStats('Alan Anderson');
 playerStats('Reggie Evans');
@@ -308,10 +313,18 @@ playerStats('Brook Lopez');
 playerStats('Ben Gordon');
 playerStats('Bismak Biyombo');
 
+console.log('');
+
 bigShoeRebounds();
+
+console.log('');
 
 mostPointsScored();
 
+console.log('');
+
 winningTeam();
-*/
+
+console.log('');
+
 playerWithLongestName();
