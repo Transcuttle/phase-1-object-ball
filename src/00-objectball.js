@@ -126,9 +126,12 @@ function gameIterator(target, request, name){
             if (key === name){
                 value = target[key][request];
                 break
+            }else if (target[key] === name){
+                
+                value = target[request];
             }else if (value === undefined){
 
-                value = gameIterator(target[key], name, request);
+                value = gameIterator(target[key], request, name);
             }
         }
     }
@@ -139,13 +142,28 @@ function numPointsScored(name){
     const value = gameIterator(gameObject(), 'points', name);
     
     console.log(`${name} Scored: ${value} points`);
+    return value;
 }
 
 function shoeSize(name){
-    
     const value = gameIterator(gameObject(), 'shoe', name);
     
     console.log(`${name} shoe size: size ${value}`);
+    return value;
+}
+
+function teamColors(team){
+    const value = gameIterator(gameObject(), 'colors', team);
+    
+    console.log(`${team}'s colors: ${value[0]} and ${value[1]}`);
+    return value;
+}
+
+function teamNames(){
+    const teams = [gameIterator(gameObject(), 'teamName', 'home'), gameIterator(gameObject(), 'teamName', 'away')];
+
+    console.log(`The teams: ${teams[0]} and ${teams[1]}`);
+    return teams;
 }
 
 numPointsScored('Alan Anderson');
@@ -154,8 +172,19 @@ numPointsScored('Brook Lopez');
 numPointsScored('Ben Gordon');
 numPointsScored('Bismak Biyombo');
 
+console.log('');
+
 shoeSize('Alan Anderson');
 shoeSize('Reggie Evans');
 shoeSize('Brook Lopez');
 shoeSize('Ben Gordon');
 shoeSize('Bismak Biyombo');
+
+console.log('');
+
+teamColors('Brooklyn Nets');
+teamColors('Charlotte Hornets');
+
+console.log('');
+
+teamNames();
