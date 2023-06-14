@@ -1,9 +1,11 @@
+const game = gameObject();
+
 function gameObject(){
     const game = {
         home: {
             teamName: 'Brooklyn Nets',
             colors: ['Black', 'White'],
-            player: {
+            players: {
                 'Alan Anderson': {
                     number: 0,
                     shoe: 16,
@@ -59,7 +61,7 @@ function gameObject(){
         away: {
             teamName: 'Charlotte Hornets',
             colors: ['Turquoise', 'Purple'],
-            player: {
+            players: {
                 'Jeff Adrien': {
                     number: 4,
                     shoe: 18,
@@ -120,6 +122,7 @@ function gameObject(){
 
 function gameIterator(target, request, name){
     let value;
+    
     if (typeof target === 'object'){
         for (let key in target){
             
@@ -139,33 +142,80 @@ function gameIterator(target, request, name){
 }
 
 function numPointsScored(name){
-    const value = gameIterator(gameObject(), 'points', name);
+    const value = gameIterator(game, 'points', name);
     
     console.log(`${name} Scored: ${value} points`);
     return value;
 }
 
 function shoeSize(name){
-    const value = gameIterator(gameObject(), 'shoe', name);
+    const value = gameIterator(game, 'shoe', name);
     
     console.log(`${name} shoe size: size ${value}`);
     return value;
 }
 
 function teamColors(team){
-    const value = gameIterator(gameObject(), 'colors', team);
+    const value = gameIterator(game, 'colors', team);
     
     console.log(`${team}'s colors: ${value[0]} and ${value[1]}`);
     return value;
 }
 
 function teamNames(){
-    const teams = [gameIterator(gameObject(), 'teamName', 'home'), gameIterator(gameObject(), 'teamName', 'away')];
+    const teams = [gameIterator(game, 'teamName', 'home'), gameIterator(gameObject(), 'teamName', 'away')];
 
     console.log(`The teams: ${teams[0]} and ${teams[1]}`);
     return teams;
 }
 
+function playerNumbers(team){
+    let numbers = [];
+    const players = gameIterator(game, 'players', team);
+    
+    for (let player in players){
+        
+        numbers.push(gameIterator(game, 'number', player));
+    }
+    console.log(`${team}'s numbers: ${numbers[0]}, ${numbers[1]}, ${numbers[2]}, ${numbers[3]}, and ${numbers[4]}`);
+    return numbers;
+}
+
+function playerStats(player){
+    let stats;
+    let players = {
+        ...gameIterator(game, 'players', 'home'), 
+        ...gameIterator(game, 'players', 'away')
+    };
+    
+    for (let athlete in players){
+        if (athlete === player){
+            stats = players[athlete];
+        }
+    }
+    console.log(`${player}'s stats: `, stats);
+    return stats;
+}
+
+function bigShoeRebounds(){
+    let shoe = 0;
+    let rebounds = 0;
+    let player;
+    let players = {
+        ...gameIterator(game, 'players', 'home'), 
+        ...gameIterator(game, 'players', 'away')
+    };
+    for (let athlete in players){
+        let tempShoe = shoeSize(athlete);
+        if (tempShoe > shoe)
+            shoe = tempShoe;
+            player = players[athlete];
+            rebounds = gameIterator(game, 'rebounds', athlete);
+    }
+    console.log(`Player with the largest shoe size has ${rebounds} rebounds`)
+    return rebounds;
+}
+/*
 numPointsScored('Alan Anderson');
 numPointsScored('Reggie Evans');
 numPointsScored('Brook Lopez');
@@ -188,3 +238,14 @@ teamColors('Charlotte Hornets');
 console.log('');
 
 teamNames();
+*/
+playerNumbers('Brooklyn Nets');
+playerNumbers('Charlotte Hornets');
+
+playerStats('Alan Anderson');
+playerStats('Reggie Evans');
+playerStats('Brook Lopez');
+playerStats('Ben Gordon');
+playerStats('Bismak Biyombo');
+
+bigShoeRebounds();
