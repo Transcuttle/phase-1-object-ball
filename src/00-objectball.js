@@ -183,7 +183,7 @@ function playerNumbers(team){
 
 function playerStats(player){
     let stats;
-    let players = {
+    const players = {
         ...gameIterator(game, 'players', 'home'), 
         ...gameIterator(game, 'players', 'away')
     };
@@ -201,7 +201,7 @@ function bigShoeRebounds(){
     let shoe = 0;
     let rebounds = 0;
     let player;
-    let players = {
+    const players = {
         ...gameIterator(game, 'players', 'home'), 
         ...gameIterator(game, 'players', 'away')
     };
@@ -209,11 +209,71 @@ function bigShoeRebounds(){
         let tempShoe = shoeSize(athlete);
         if (tempShoe > shoe)
             shoe = tempShoe;
-            player = players[athlete];
+            player = athlete;
             rebounds = gameIterator(game, 'rebounds', athlete);
     }
-    console.log(`Player with the largest shoe size has ${rebounds} rebounds`)
+    console.log(`Player with the largest shoe size (${player}): ${rebounds} rebounds`)
     return rebounds;
+}
+
+function mostPointsScored(){
+    let score = 0;
+    let player;
+    const players = {
+        ...gameIterator(game, 'players', 'home'), 
+        ...gameIterator(game, 'players', 'away')
+    };
+    for (let athlete in players){
+        let tempScore = numPointsScored(athlete);
+        if (tempScore > score){
+            score = tempScore;
+            player = athlete
+        }
+    }
+    console.log(`Player with the most points: ${player} with ${score} points`);
+    return player;
+}
+
+function winningTeam(){
+    let homeScore = 0;
+    let awayScore = 0;
+    const homePlayers = gameIterator(game, 'players', 'home');
+    const awayPlayers = gameIterator(game, 'players', 'away');
+    debugger
+    for (let athlete in homePlayers){
+        homeScore += numPointsScored(athlete);
+    }
+    for (let athlete in awayPlayers){
+        awayScore += numPointsScored(athlete);
+    }
+    if (homeScore > awayScore){
+        console.log(`${game.home.teamName} wins ${homeScore} to ${awayScore}`);
+        return game.home.teamName;
+    }else if (homeScore < awayScore){
+        console.log(`${game.away.teamName} wins ${awayScore} to ${homeScore}`)
+        return game.away.teamName;
+    }else {
+        console.log(`It's a tie at ${homeScore} to ${awayScore}`)
+        return;
+    }
+}
+
+function playerWithLongestName(){
+    let length = 0;
+    let player;
+    const players = {
+        ...gameIterator(game, 'players', 'home'), 
+        ...gameIterator(game, 'players', 'away')
+    };
+    
+    for (let athlete in players){
+        if (athlete.length > length){
+            length = athlete.length;
+            player = athlete;
+        }
+    }
+    console.log(`Longest name: ${player} with ${length} characters`);
+    return player;
 }
 /*
 numPointsScored('Alan Anderson');
@@ -238,7 +298,7 @@ teamColors('Charlotte Hornets');
 console.log('');
 
 teamNames();
-*/
+
 playerNumbers('Brooklyn Nets');
 playerNumbers('Charlotte Hornets');
 
@@ -249,3 +309,9 @@ playerStats('Ben Gordon');
 playerStats('Bismak Biyombo');
 
 bigShoeRebounds();
+
+mostPointsScored();
+
+winningTeam();
+*/
+playerWithLongestName();
