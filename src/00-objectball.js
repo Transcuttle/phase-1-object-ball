@@ -277,6 +277,30 @@ function playerWithLongestName(){
     return player;
 }
 
+function doesLongNameStealATon(){
+    const player = playerWithLongestName();
+    let steals = 0;
+    let comparisonPlayer;
+    const players = {
+        ...gameIterator(game, 'players', 'home'), 
+        ...gameIterator(game, 'players', 'away')
+    };
+    for (let athlete in players){
+        let tempSteals = gameIterator(game, 'steals', athlete);
+        if (tempSteals > steals){
+            steals = tempSteals;
+            comparisonPlayer = athlete;
+        }
+    }
+    if (player === comparisonPlayer){
+        console.log(`Yes, ${player} does steal the most`)
+        return true;
+    }else {
+        console.log(`No, ${player} does not steal the most`);
+        return false;
+    }
+}
+
 numPointsScored('Alan Anderson');
 numPointsScored('Reggie Evans');
 numPointsScored('Brook Lopez');
@@ -327,4 +351,4 @@ winningTeam();
 
 console.log('');
 
-playerWithLongestName();
+doesLongNameStealATon();
